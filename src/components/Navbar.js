@@ -15,7 +15,7 @@ function Navigation() {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand as={Link} to="/">Bad Bank</Navbar.Brand>
+      {!isLoggedIn && <Navbar.Brand as={Link} to="/">Bad Bank</Navbar.Brand>} {/* Hide if logged in */}
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -27,9 +27,7 @@ function Navigation() {
           )}
           {isLoggedIn && (
             <>
-              <Nav.Link as={Link} to="/withdraw">Withdraw</Nav.Link>
-              <Nav.Link as={Link} to="/deposit">Deposit</Nav.Link>
-              <Nav.Link as={Link} to="/balance">Balance</Nav.Link>
+              <Nav.Link as={Link} to="/account">Account</Nav.Link> {/* Combined Account link */}
             </>
           )}
         </Nav>

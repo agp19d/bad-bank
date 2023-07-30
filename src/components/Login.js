@@ -22,7 +22,7 @@ function Login() {
       setIsLoggedIn(true);
       setUserIcon(<FontAwesomeIcon icon={faUser} />);
       setUsername(storedUsername); // Set the username in AuthContext
-      navigate('/'); // Redirect to home page or any other page
+      navigate('/account'); // Redirect to home page or any other page
     } else {
       setError('Invalid username or password.');
     }
