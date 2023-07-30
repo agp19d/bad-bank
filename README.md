@@ -10,9 +10,7 @@ Welcome to Bad Bank, a simple and intuitive banking application that offers a va
     - [Installation](#installation)
 3. [Usage](#usage)
 4. [Components](#components)
-5. [Contributing](#contributing)
-6. [License](#license)
-7. [Contact](#contact)
+5. [Contact](#contact)
 
 ## Features
 
