@@ -5,12 +5,12 @@ import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-function Login() {
-  const [username, setUsername] = useState('');
+function Login() {  
+  const [usernameInput, setUsernameInput] = useState(''); // Renamed to avoid conflict
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { setIsLoggedIn, setUserIcon } = useAuth();
+  const { setIsLoggedIn, setUserIcon, setUsername } = useAuth(); // Added setUsername
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,10 +18,11 @@ function Login() {
     const storedUsername = localStorage.getItem('username');
     const storedPassword = localStorage.getItem('password');
 
-    if (username === storedUsername && password === storedPassword) {
+    if (usernameInput === storedUsername && password === storedPassword) {
       setIsLoggedIn(true);
       setUserIcon(<FontAwesomeIcon icon={faUser} />);
-      navigate('/'); // Redirect to home page or any other page
+      setUsername(storedUsername); // Set the username in AuthContext
+      navigate('/account'); // Redirect to home page or any other page
     } else {
       setError('Invalid username or password.');
     }
@@ -36,8 +37,8 @@ function Login() {
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={usernameInput}
+            onChange={(e) => setUsernameInput(e.target.value)} // Updated to use renamed state
             required
           />
         </Form.Group>

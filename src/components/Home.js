@@ -11,9 +11,6 @@ function Home() {
           <Card.Text>
             Your trusted partner in personal finance. Join us today and take control of your financial future.
           </Card.Text>
-          <Button as={Link} to="/create-account" variant="primary">
-            Create Account
-          </Button>
         </Card.Body>
       </Card>
 
