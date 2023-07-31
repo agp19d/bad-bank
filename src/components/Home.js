@@ -1,3 +1,9 @@
+/**
+ * @author Alejandro Garcia de Paredes
+ * @created July 27, 2023
+ * @modified July 31, 2023
+ **/
+
 import React from 'react';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';

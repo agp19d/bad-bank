@@ -1,4 +1,10 @@
-import React, { useState } from 'react';
+/**
+ * @author Alejandro Garcia de Paredes
+ * @created July 27, 2023
+ * @modified July 31, 2023
+ **/
+
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Button, Form, Container, Alert, Card } from 'react-bootstrap';
 
@@ -6,7 +12,7 @@ function Account() {
   const [amount, setAmount] = useState(0);
   const [transactionType, setTransactionType] = useState('deposit');
   const [error, setError] = useState(null);
-  const { balance, setBalance } = useAuth();
+  const { balance, setBalance, username } = useAuth();
 
   const handleTransaction = (e) => {
     e.preventDefault();
@@ -29,6 +35,15 @@ function Account() {
       newBalance -= parseFloat(amount);
     }
 
+    // Retrieve the current user's information from local storage
+    const userData = JSON.parse(localStorage.getItem(username));
+
+    // Update the balance in the user's data
+    userData.balance = newBalance;
+
+    // Save the updated user data back to local storage
+    localStorage.setItem(username, JSON.stringify(userData));
+
     setBalance(newBalance);
     setError(null);
     setAmount(0);
@@ -49,8 +64,8 @@ function Account() {
           <Form.Label>Amount</Form.Label>
           <Form.Control
             type="number"
-            min="0.01" // Minimum value set to 0.01
-            step="0.01" // Allowing decimal values
+            min="0.01"
+            step="0.01"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             required
