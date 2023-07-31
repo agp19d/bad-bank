@@ -15,6 +15,7 @@ function CreateAccount() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
   // Navigation hook for redirecting
@@ -41,8 +42,14 @@ function CreateAccount() {
     // Store user in local storage
     localStorage.setItem(username, JSON.stringify(user));
 
+    // Set success message
+    setSuccess('Account created successfully! Redirecting to login...');
+
     // Redirect to login page
-    navigate('/login');
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000);
+
   };
 
   return (
@@ -50,6 +57,7 @@ function CreateAccount() {
       <h1>Create Account</h1>
       <Form onSubmit={handleSubmit}>
         {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
         <Form.Group>
           <Form.Label>Username</Form.Label>
           <Form.Control
