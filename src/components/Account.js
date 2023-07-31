@@ -4,19 +4,25 @@
  * @modified July 31, 2023
  **/
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Button, Form, Container, Alert, Card } from 'react-bootstrap';
 
 function Account() {
+
+  // State variables
   const [amount, setAmount] = useState(0);
   const [transactionType, setTransactionType] = useState('deposit');
   const [error, setError] = useState(null);
+
+  // Context variables
   const { balance, setBalance, username } = useAuth();
 
+  // Transaction handler
   const handleTransaction = (e) => {
     e.preventDefault();
 
+    // Validate amount is geater than zero
     if (amount <= 0) {
       setError('Amount must be greater than zero.');
       return;
@@ -24,26 +30,25 @@ function Account() {
 
     let newBalance = balance;
 
+    // Validate withdrawal amount
     if (transactionType === 'withdraw' && amount > balance) {
       setError('Insufficient funds for withdrawal.');
       return;
     }
 
+    // Update balance based on transaction type
     if (transactionType === 'deposit') {
       newBalance += parseFloat(amount);
     } else if (transactionType === 'withdraw') {
       newBalance -= parseFloat(amount);
     }
 
-    // Retrieve the current user's information from local storage
+    // Retrieve and update user's information in local storage
     const userData = JSON.parse(localStorage.getItem(username));
-
-    // Update the balance in the user's data
     userData.balance = newBalance;
-
-    // Save the updated user data back to local storage
     localStorage.setItem(username, JSON.stringify(userData));
 
+    // Update state variables
     setBalance(newBalance);
     setError(null);
     setAmount(0);

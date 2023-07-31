@@ -8,6 +8,7 @@ import React from 'react';
 import { Table, Container } from 'react-bootstrap';
 
 function AllData() {
+  
   // Filter only the keys that represent user data and then parse them
   const users = Object.keys(localStorage)
     .filter((key) => localStorage.getItem(key).includes('username'))

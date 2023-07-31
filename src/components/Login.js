@@ -11,24 +11,31 @@ import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-function Login() {  
+function Login() { 
+
+  // State for managing form input and errors 
   const [usernameInput, setUsernameInput] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  
+  // Navigation and Auth context  
   const navigate = useNavigate();
   const { setIsLoggedIn, setUserIcon, setUsername, setBalance } = useAuth();
 
+  // Handle login form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Retrieve the user data from local storage
     const storedUser = JSON.parse(localStorage.getItem(usernameInput));
 
+    // Validate the user credentials
     if (storedUser && password === storedUser.password) {
       setIsLoggedIn(true);
       setUserIcon(<FontAwesomeIcon icon={faUser} />);
       setUsername(storedUser.username);
       setBalance(storedUser.balance);
-      navigate('/account');
+      navigate('/account'); // Redirect to account page on successful login
     } else {
       setError('Invalid username or password.');
     }

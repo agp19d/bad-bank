@@ -11,9 +11,12 @@ import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 function Navigation() {
+
+  // Extract relevant authentication properties and navigation function
   const { isLoggedIn, userIcon, username, logout } = useAuth();
   const navigate = useNavigate();
 
+  // Handle logout by invoking the logout method and redirecting to the home page
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -25,6 +28,8 @@ function Navigation() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
+
+          {/* Display links based on the login status */}
           {!isLoggedIn && (
             <>
               <Nav.Link as={Link} to="/create-account">Create Account</Nav.Link>
@@ -38,6 +43,8 @@ function Navigation() {
             </>
           )}
         </Nav>
+
+        {/* Display user information and logout button if logged in */}
         {isLoggedIn && 
           <div className="user-info">
             <div className="user-icon">{userIcon}</div>

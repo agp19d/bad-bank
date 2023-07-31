@@ -9,21 +9,28 @@ import { Button, Form, Container, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 function CreateAccount() {
+
+  // State variables for form fields and error handling
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
+
+  // Navigation hook for redirecting
   const navigate = useNavigate();
 
+  // Handle account creation submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Password matching validation
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
 
+    // Create user object
     const user = {
       username: username,
       email: email,
@@ -31,10 +38,10 @@ function CreateAccount() {
       balance: 0,
     };
 
-    // Store the user information in local storage as a JSON object using the username as the key
+    // Store user in local storage
     localStorage.setItem(username, JSON.stringify(user));
 
-    // Redirect to login page or any other page as needed
+    // Redirect to login page
     navigate('/login');
   };
 
