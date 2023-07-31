@@ -68,6 +68,7 @@ The application consists of several components, including:
 - `Account`
 - `Navbar`
 - `Home`
+- `AllData`
 
 Refer to the source code for detailed implementation and functionalities.
 

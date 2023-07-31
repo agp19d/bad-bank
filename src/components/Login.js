@@ -1,3 +1,9 @@
+/**
+ * @author Alejandro Garcia de Paredes
+ * @created July 27, 2023
+ * @modified July 31, 2023
+ **/
+
 import React, { useState } from 'react';
 import { Button, Form, Container, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -5,24 +11,31 @@ import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-function Login() {  
-  const [usernameInput, setUsernameInput] = useState(''); // Renamed to avoid conflict
+function Login() { 
+
+  // State for managing form input and errors 
+  const [usernameInput, setUsernameInput] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  
+  // Navigation and Auth context  
   const navigate = useNavigate();
-  const { setIsLoggedIn, setUserIcon, setUsername } = useAuth(); // Added setUsername
+  const { setIsLoggedIn, setUserIcon, setUsername, setBalance } = useAuth();
 
+  // Handle login form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
+    // Retrieve the user data from local storage
+    const storedUser = JSON.parse(localStorage.getItem(usernameInput));
 
-    if (usernameInput === storedUsername && password === storedPassword) {
+    // Validate the user credentials
+    if (storedUser && password === storedUser.password) {
       setIsLoggedIn(true);
       setUserIcon(<FontAwesomeIcon icon={faUser} />);
-      setUsername(storedUsername); // Set the username in AuthContext
-      navigate('/account'); // Redirect to home page or any other page
+      setUsername(storedUser.username);
+      setBalance(storedUser.balance);
+      navigate('/account'); // Redirect to account page on successful login
     } else {
       setError('Invalid username or password.');
     }
@@ -38,7 +51,7 @@ function Login() {
           <Form.Control
             type="text"
             value={usernameInput}
-            onChange={(e) => setUsernameInput(e.target.value)} // Updated to use renamed state
+            onChange={(e) => setUsernameInput(e.target.value)}
             required
           />
         </Form.Group>
